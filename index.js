@@ -21,6 +21,23 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
+    const menuCollection = client.db("epicureanDB").collection("menu");
+
+    // get all from menu
+    app.get("/menu", async (req, res) => {
+      const result = await menuCollection.find().toArray();
+      res.send(result);
+    });
+
+    //-------------------------------------
+    const reviewsCollection = client.db("epicureanDB").collection("reviews");
+
+    // get all from reviews
+    app.get("/reviews", async (req, res) => {
+      const result = await reviewsCollection.find().toArray();
+      res.send(result);
+    });
+
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged! Successfully connected to MongoDB!");
   } catch {
