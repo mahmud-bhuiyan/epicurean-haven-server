@@ -21,6 +21,9 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
+    // ------------------------------
+    //      menuCollection
+    // ------------------------------
     const menuCollection = client.db("epicureanDB").collection("menu");
 
     // get all from menu
@@ -29,12 +32,27 @@ async function run() {
       res.send(result);
     });
 
-    //-------------------------------------
+    // ------------------------------
+    //      reviewsCollection
+    // ------------------------------
     const reviewsCollection = client.db("epicureanDB").collection("reviews");
 
     // get all from reviews
     app.get("/reviews", async (req, res) => {
       const result = await reviewsCollection.find().toArray();
+      res.send(result);
+    });
+
+    // ------------------------------
+    //         cartCollection
+    // ------------------------------
+    const cartCollection = client.db("epicureanDB").collection("carts");
+
+    //add to cart
+    app.post("/carts", async (req, res) => {
+      const item = req.body;
+      console.log(item);
+      const result = await cartCollection.insertOne(item);
       res.send(result);
     });
 
