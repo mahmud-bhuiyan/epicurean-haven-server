@@ -22,6 +22,18 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // ------------------------------
+    //      usersCollection
+    // ------------------------------
+    const usersCollection = client.db("epicureanDB").collection("users");
+
+    // store users details
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
+    // ------------------------------
     //      menuCollection
     // ------------------------------
     const menuCollection = client.db("epicureanDB").collection("menu");
@@ -51,7 +63,6 @@ async function run() {
     //add to cart
     app.post("/carts", async (req, res) => {
       const item = req.body;
-      console.log(item);
       const result = await cartCollection.insertOne(item);
       res.send(result);
     });
