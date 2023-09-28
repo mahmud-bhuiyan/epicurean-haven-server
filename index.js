@@ -131,18 +131,19 @@ async function run() {
     });
 
     // get all data from cart for specific email
-    app.get("/carts", verifyJWT, async (req, res) => {
+    // app.get("/carts", verifyJWT, async (req, res) => {
+    app.get("/carts", async (req, res) => {
       const email = req.query.email;
       if (!email) {
         res.send([]);
       }
 
-      const decodedEmail = req.decoded.email;
-      if (email !== decodedEmail) {
-        return res
-          .status(403)
-          .send({ error: true, message: "forbidden access" });
-      }
+      // const decodedEmail = req.decoded.email;
+      // if (email !== decodedEmail) {
+      //   return res
+      //     .status(403)
+      //     .send({ error: true, message: "forbidden access" });
+      // }
 
       const query = { email: email };
       const result = await cartCollection.find(query).toArray();
